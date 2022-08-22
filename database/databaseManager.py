@@ -70,13 +70,17 @@ class DataBaseManager:
                 except m.ProgrammingError:
                     messagebox.showerror("Error en la conexión a la DB",
                                          "Se produjo un Error al intentar guardar los datos.")
+                    break
                 except m.Error:
                     messagebox.showerror("Error en la conexión a la DB",
                                          "Se produjo un Error al intentar guardar los datos.")
+                    break
             except m.Error:
                 messagebox.showerror("Error en la conexión a la DB",
                                      "Se produjo un Error al intentar guardar los datos.")
+                break
         self._conn.commit()
+        messagebox.showinfo("información guardada", "La información se guardo satisfactoriamente en la base de datos.")
         return True
 
     def executeQueriesByDict(self, *args):
