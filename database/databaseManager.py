@@ -1,5 +1,3 @@
-import os
-
 from tkinter import messagebox
 import mariadb as m
 
@@ -16,12 +14,12 @@ class DataBaseManager:
         self._status = False
         try:
             self._conn = m.Connection(
-                user=os.environ.get("USER_DB"),
-                password=os.environ.get("PASSWORD_DB"),
-                host=os.environ.get("HOST_DB"),
-                port=int(os.environ.get("PORT_DB")),
-                database=os.environ.get("DATABASE_DB")
-            )
+                user="root",
+                password="",
+                host="127.0.0.1",
+                port=3310,
+                database="ads"
+            )  # TODO: Cambiar datos al desplegar
             self._cursor = self._conn.cursor()
             self._status = True
         except m.OperationalError:
@@ -30,7 +28,7 @@ class DataBaseManager:
 
     def getStatus(self):
         """
-        Función que retorno el estado de nuestra coneccion
+        Función que retorna el estado de nuestra conexión
 
         :return: True o False dependiendo de si la conexión a la base de datos fue hecha.
         """
@@ -63,10 +61,15 @@ class DataBaseManager:
             except m.IntegrityError:
                 try:
                     values = ()
-                    self._cursor.execute(os.environ.get("SELECT_QUERY"), (data[item]['values'][3], data[item]['values'][4]))
+                    self._cursor.execute(' SELECT `id` FROM `datosads` WHERE bibcode = ? and doi = ?;',
+                                         (data[item]['values'][3], data[item]['values'][4]))
+                    # TODO: Cambiar datos al desplegar
                     for response in self._cursor:
                         values = data[item]['values'] + response
-                    self._cursor.execute(os.environ.get("UPDATE_QUERY"), values)
+                    self._cursor.execute('UPDATE `datosads` SET `autores` = ?, `title` = ?, `pub` = ?, `bibcode` = ?, '
+                                         '`doi` = ?, `fpage` = ?, `lpage` = ?, `volumen` = ?, `year` = ? '
+                                         'WHERE `datosads`.`id` = ?;', values)
+                    # TODO: Cambiar datos al desplegar
                 except m.ProgrammingError:
                     messagebox.showerror("Error en la conexión a la DB",
                                          "Se produjo un Error al intentar guardar los datos.")

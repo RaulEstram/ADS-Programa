@@ -1,9 +1,5 @@
-from dotenv import load_dotenv, find_dotenv
-
 from tkinter import *
 from interfaces.masterFrame import MasterFrame
-
-load_dotenv(find_dotenv())
 
 # Creamos una ventana
 root = Tk()

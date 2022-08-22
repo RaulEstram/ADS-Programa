@@ -1,6 +1,3 @@
-import os
-
-
 class QueriesManager:
 
     @staticmethod
@@ -22,7 +19,9 @@ class QueriesManager:
                 fpage = articule['page_range'] if articule['page_range'] != "Undefined" else None
                 lpage = articule['page_range'] if articule['page_range'] != "Undefined" else None
 
-            query = os.environ.get("INSERT_QUERY_SHOW").format(
+            query = 'INSERT INTO `DatosADS` (`autores`, `title`, `pub`, `bibcode`, `doi`, `fpage`, `lpage`, `volumen`, ' \
+                    '`year`) VALUES ("{autor}", "{title}", "{pub}", "{bibcode}", "{doi}", "{fpage}", "{lpage}", ' \
+                    '"{volume}", "{year}");'.format(
                 autor=author,
                 title=articule['title'],
                 pub=articule['pub'],
@@ -33,6 +32,7 @@ class QueriesManager:
                 volume=articule['volume'],
                 year=articule['year']
             )
+            # TODO: Cambiar datos al desplegar
             queries += query + "\n"
         return queries
 
@@ -51,7 +51,9 @@ class QueriesManager:
                 fpage = articule['page_range'] if articule['page_range'] != "Undefined" else None
                 lpage = articule['page_range'] if articule['page_range'] != "Undefined" else None
 
-            query = os.environ.get("INSERT_QUERY")
+            query = 'INSERT INTO `DatosADS` (`autores`, `title`, `pub`, `bibcode`, `doi`, `fpage`, `lpage`, ' \
+                    '`volumen`, `year`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);'
+            # TODO: Cambiar datos al desplegar
             values = (
                 author,
                 articule['title'],

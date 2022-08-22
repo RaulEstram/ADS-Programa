@@ -24,7 +24,7 @@ class Search(tk.Frame):
         self.buscarLabel = None
         self.textArea = None
         self.area = None
-        self.botonCSV = None
+        self.botontxt = None
         self.botonQueries = None
         self.data = {}
         self.obtenerTexto = None
@@ -55,14 +55,14 @@ class Search(tk.Frame):
 
         self.textArea = CustomTextArea(self.area)
 
-        self.botonCSV = CustomButton(self, "Guardar txt", command=lambda: fm.saveDictAsCsvFile(
-            self.textArea.getText()))  # TODO: cambiar command
-        self.botonCSV.grid(row=18, column=1, padx=5, sticky="nsew")
+        self.botontxt = CustomButton(self, "Guardar txt", command=lambda: fm.saveDictAsCsvFile(
+            self.textArea.getText()))
+        self.botontxt.grid(row=18, column=1, padx=5, sticky="nsew")
 
         self.botonQueries = CustomButton(self, "Ver Queries", command=self.showQueries)
         self.botonQueries.grid(row=18, column=2, padx=5, sticky="nsew")
 
-        self.botonSave = CustomButton(self, "Limpiar", command=self.saveDataInDataBase)
+        self.botonSave = CustomButton(self, "Limpiar", command=lambda: self.reloadTextArea(""))
         self.botonSave.grid(row=18, column=7, padx=5, sticky="nsew")
 
         self.botonSave = CustomButton(self, "Guardar", command=self.saveDataInDataBase)

@@ -1,4 +1,3 @@
-import os
 import requests
 import json
 from tkinter import messagebox
@@ -8,8 +7,9 @@ class ADS:
 
     # Constructor
     def __init__(self):
-        self._token = os.environ.get("TOKEN_API")
-        self._endpoint = os.environ.get("ENDPOINT")
+        self._token = "TnEWAPDi8n5R3taijqXleJDTZ5LNDr2LMJjOOsec"
+        self._endpoint = "https://api.adsabs.harvard.edu/v1/search/query?q={key}&rows=200&fl=author,title,pub,bibcode,doi,volume,year,page_range,links_data&sort=date desc"
+        # TODO: Cambiar datos al desplegar
 
     def getDataByKey(self, key: str, cache) -> bool:
         """
