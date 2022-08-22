@@ -62,7 +62,7 @@ class Search(tk.Frame):
         self.botonQueries = CustomButton(self, "Ver Queries", command=self.showQueries)
         self.botonQueries.grid(row=18, column=2, padx=5, sticky="nsew")
 
-        self.botonSave = CustomButton(self, "Limpiar", command=self.saveDataInDataBase)
+        self.botonSave = CustomButton(self, "Limpiar", command=lambda: self.reloadTextArea(""))
         self.botonSave.grid(row=18, column=7, padx=5, sticky="nsew")
 
         self.botonSave = CustomButton(self, "Guardar", command=self.saveDataInDataBase)
@@ -83,12 +83,11 @@ class Search(tk.Frame):
         self.textArea.setText(txt)
 
     def showQueries(self):
-        canva = WindowsText(
-            "Estos Queries Son una Previsualización, puede que contengan algún tipo de error\n\n" + qm.createPreSqlQueries(
-                self.data, "User"), "Queries")
+        WindowsText(
+            "Estos Queries Son una Previsualización, puede que contengan algún tipo de error\n\n" +
+            qm.createPreSqlQueries(self.data, "User"), "Queries")
 
     def saveDataInDataBase(self):
         self.connection = DataBaseManager()
         if self.connection.getStatus():
-            message = EntryMessage("Ingrese el Author", "Digite el Author", self.connection.executeQueriesByDict,
-                                   self.data)
+            EntryMessage("Ingrese el Author", "Digite el Author", self.connection.executeQueriesByDict, self.data)
